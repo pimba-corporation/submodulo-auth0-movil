@@ -21,7 +21,7 @@ class PreferenciasBloc extends Bloc<PreferenciasEvent, PreferenciasState> {
     if (event is CambioIdiomaEvent){
       print('aqui el evento');
       await this.almacenamientoLocalRepositorio.cambiarIdioma(event.lenguaje);
-      yield IdiomaCambiado();
+      yield IdiomaCambiado(this.almacenamientoLocalRepositorio.lenguajeAplicacion);
     }
   }
 }

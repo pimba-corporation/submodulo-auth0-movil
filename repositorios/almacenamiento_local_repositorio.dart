@@ -72,18 +72,15 @@ class AlmacenamientoLocalRepositorio {
     var almacenamientoLocal = await SharedPreferences.getInstance();
     bool esElMismoLenguaje = _lenguajeAplicacion == lenguaje;
     if (esElMismoLenguaje) {
-      print('llege aqui :(');
       return;
     }
     if (lenguaje == Locale('es')) {
       _lenguajeAplicacion = Locale('es', 'EC');
       await almacenamientoLocal.setString('lang_code', 'es');
-      print('estoy aqui');
       // await prefs.setString('countryCode', '');
     } else {
       _lenguajeAplicacion = Locale('en');
       await almacenamientoLocal.setString('language_code', 'en');
-      print('estoy aqui x 2');
       // await prefs.setString('countryCode', 'US');
     }
   }

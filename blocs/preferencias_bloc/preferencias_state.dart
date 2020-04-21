@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/cupertino.dart';
 
 abstract class PreferenciasState extends Equatable {
   const PreferenciasState();
@@ -11,4 +12,9 @@ class InitialPreferenciasState extends PreferenciasState {
 
 class EstaCargandoPreferenciasState extends PreferenciasState{}
 
-class IdiomaCambiado extends PreferenciasState{}
+class IdiomaCambiado extends PreferenciasState{
+  final Locale locale;
+  IdiomaCambiado(this.locale);
+  @override
+  List<Object> get props => [locale];
+}
