@@ -1,14 +1,15 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:open_market_movil/src/submodulos/submodulo-auth0-movil/enums/colores.dart';
+import 'package:open_market_movil/src/submodulos/submodulo-internacionalizacion-movil/app_locations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AlmacenamientoLocalRepositorio {
-  Locale _lenguajeAplicacion = Locale('en');
+  Locale _lenguajeAplicacion = Locale('es', 'EC');
   MaterialColor _temaAplicacion = Colors.blue;
 
   // getters
-  Locale get lenguajeAplicacion => _lenguajeAplicacion ?? Locale("en");
+  Locale get lenguajeAplicacion => _lenguajeAplicacion ?? Locale('es', 'EC');
 
   MaterialColor get temaAplicacion => _temaAplicacion ?? Colors.blue;
 
@@ -23,8 +24,9 @@ class AlmacenamientoLocalRepositorio {
     if (tieneGuardadoLenguaje) {
       _lenguajeAplicacion = Locale(lenguaje);
     } else {
-      _lenguajeAplicacion = Locale('en');
+      _lenguajeAplicacion = Locale('es', 'EC');
     }
+    print('codigo establecido ' + _lenguajeAplicacion.languageCode);
     return;
   }
 
@@ -60,7 +62,6 @@ class AlmacenamientoLocalRepositorio {
     }
     if (tema == TemaSistema.rojo) {
       await almacenamientoLocal.setString('tema', 'rojo');
-
     }
     if (tema == TemaSistema.oscuro) {
       await almacenamientoLocal.setString('tema', 'oscuro');
@@ -71,15 +72,18 @@ class AlmacenamientoLocalRepositorio {
     var almacenamientoLocal = await SharedPreferences.getInstance();
     bool esElMismoLenguaje = _lenguajeAplicacion == lenguaje;
     if (esElMismoLenguaje) {
+      print('llege aqui :(');
       return;
     }
-    if (lenguaje == Locale("es")) {
-      _lenguajeAplicacion = Locale("es");
+    if (lenguaje == Locale('es')) {
+      _lenguajeAplicacion = Locale('es', 'EC');
       await almacenamientoLocal.setString('lang_code', 'es');
+      print('estoy aqui');
       // await prefs.setString('countryCode', '');
     } else {
-      _lenguajeAplicacion = Locale("en");
+      _lenguajeAplicacion = Locale('en');
       await almacenamientoLocal.setString('language_code', 'en');
+      print('estoy aqui x 2');
       // await prefs.setString('countryCode', 'US');
     }
   }

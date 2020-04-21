@@ -19,6 +19,7 @@ class PreferenciasBloc extends Bloc<PreferenciasEvent, PreferenciasState> {
   ) async* {
     yield EstaCargandoPreferenciasState();
     if (event is CambioIdiomaEvent){
+      print('aqui el evento');
       await this.almacenamientoLocalRepositorio.cambiarIdioma(event.lenguaje);
       yield IdiomaCambiado();
     }
