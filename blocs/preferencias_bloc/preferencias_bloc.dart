@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:open_market_movil/src/submodulos/submodulo-auth0-movil/repositorios/almacenamiento_local_repositorio.dart';
+import 'package:flutter/material.dart';
+import 'package:open_market_movil/src/submodulos/submodulo-auth0-movil/repositorios/local/almacenamiento_local_repositorio.dart';
 import './bloc.dart';
 import 'package:meta/meta.dart';
 
@@ -19,9 +20,12 @@ class PreferenciasBloc extends Bloc<PreferenciasEvent, PreferenciasState> {
   ) async* {
     yield EstaCargandoPreferenciasState();
     if (event is CambioIdiomaEvent){
-      print('aqui el evento');
       await this.almacenamientoLocalRepositorio.cambiarIdioma(event.lenguaje);
       yield IdiomaCambiado(this.almacenamientoLocalRepositorio.lenguajeAplicacion);
+    }
+    if (event is CambioTemaEvent){
+      Brightness temaColor = await this.almacenamientoLocalRepositorio.guardarTema(event.colorTema);
+      yield TemaCambiado(temaColor: temaColor);
     }
   }
 }

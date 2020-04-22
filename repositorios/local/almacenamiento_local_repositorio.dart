@@ -1,17 +1,16 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:open_market_movil/src/submodulos/submodulo-auth0-movil/enums/colores.dart';
-import 'package:open_market_movil/src/submodulos/submodulo-internacionalizacion-movil/app_locations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AlmacenamientoLocalRepositorio {
   Locale _lenguajeAplicacion = Locale('es', 'EC');
-  MaterialColor _temaAplicacion = Colors.blue;
+  Color _temaAplicacion = Colors.blue;
 
   // getters
   Locale get lenguajeAplicacion => _lenguajeAplicacion ?? Locale('es', 'EC');
 
-  MaterialColor get temaAplicacion => _temaAplicacion ?? Colors.blue;
+  Color get temaAplicacion => _temaAplicacion ?? Colors.blue;
 
   // metodos
 
@@ -44,7 +43,7 @@ class AlmacenamientoLocalRepositorio {
         _temaAplicacion = Colors.blue;
         break;
       case 'oscuro':
-        _temaAplicacion = Colors.black38;
+        _temaAplicacion = Colors.black;
         break;
       case 'rojo':
         _temaAplicacion = Colors.red;
@@ -55,17 +54,15 @@ class AlmacenamientoLocalRepositorio {
     }
   }
 
-  Future<void> guardarTema(TemaSistema tema) async {
+  Future<Brightness> guardarTema(Brightness tema) async {
     var almacenamientoLocal = await SharedPreferences.getInstance();
-    if (tema == TemaSistema.azul) {
+    if (tema == Brightness.light) {
       await almacenamientoLocal.setString('tema', 'azul');
     }
-    if (tema == TemaSistema.rojo) {
-      await almacenamientoLocal.setString('tema', 'rojo');
-    }
-    if (tema == TemaSistema.oscuro) {
+    if (tema == Brightness.dark) {
       await almacenamientoLocal.setString('tema', 'oscuro');
     }
+    return tema;
   }
 
   Future<void> cambiarIdioma(Locale lenguaje) async {
