@@ -32,8 +32,8 @@ class PerfilUsuarioDrawner extends StatelessWidget {
     return cabecerarDrawner;
   }
   bool escucharTema(PreferenciasState estado){
-    if (estado is TemaCambiado){
-        if (estado.temaColor == Brightness.light ){
+    if (estado.tema != null ){
+        if (estado.tema == Brightness.light ){
           return false;
         }
         return true;

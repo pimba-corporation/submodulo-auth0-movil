@@ -12,20 +12,29 @@ class PreferenciasBloc extends Bloc<PreferenciasEvent, PreferenciasState> {
   PreferenciasBloc({@required this.almacenamientoLocalRepositorio}): assert(almacenamientoLocalRepositorio != null);
 
   @override
-  PreferenciasState get initialState => InitialPreferenciasState();
+  PreferenciasState get initialState => PreferenciasState.defecto();
 
   @override
   Stream<PreferenciasState> mapEventToState(
     PreferenciasEvent event,
   ) async* {
-    yield EstaCargandoPreferenciasState();
-    if (event is CambioIdiomaEvent){
-      await this.almacenamientoLocalRepositorio.cambiarIdioma(event.lenguaje);
-      yield IdiomaCambiado(this.almacenamientoLocalRepositorio.lenguajeAplicacion);
+    // Cuando la aplicacion inicia se cargan los datos del almacenamiento local
+    if (event is InicioAplicacionPreferenciasEvent){
+      // Obtener los datos del almacenamiento local
+      Brightness temaColor = this.almacenamientoLocalRepositorio.temaAplicacion;
+      Locale idioma = this.almacenamientoLocalRepositorio.lenguajeAplicacion;
+      // actualizar el estado con los datos obtenidos
+      yield state.actualizar(idioma: idioma, tema: temaColor);
     }
+    // Cuando cambia el idioma del sistema
+    if (event is CambioIdiomaEvent){
+      await this.almacenamientoLocalRepositorio.guardarIdioma(event.lenguaje);
+      yield state.actualizar(idioma: this.almacenamientoLocalRepositorio.lenguajeAplicacion );
+    }
+    // Cuando cambia el tema del sistema
     if (event is CambioTemaEvent){
       Brightness temaColor = await this.almacenamientoLocalRepositorio.guardarTema(event.colorTema);
-      yield TemaCambiado(temaColor: temaColor);
+      yield state.actualizar(tema: temaColor);
     }
   }
 }

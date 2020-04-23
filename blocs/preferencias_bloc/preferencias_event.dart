@@ -6,7 +6,11 @@ import 'package:open_market_movil/src/submodulos/submodulo-auth0-movil/enums/col
 
 abstract class PreferenciasEvent extends Equatable {
   const PreferenciasEvent();
+  @override
+  List<Object> get props => null;
 }
+
+class InicioAplicacionPreferenciasEvent extends PreferenciasEvent{}
 
 class CambioIdiomaEvent extends PreferenciasEvent {
   final Locale lenguaje;
